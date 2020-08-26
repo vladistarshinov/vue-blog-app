@@ -8,7 +8,8 @@
 
 <script>
 import EmptyLayout from '@/layouts/EmptyLayout'
-import MainLayout from '@/layouts/MainLayout'
+import AdminLayout from '@/layouts/AdminLayout'
+import HomeLayout from '@/layouts/HomeLayout'
 export default {
   computed: {
     layout () {
@@ -16,7 +17,7 @@ export default {
     }
   },
   components: {
-    EmptyLayout, MainLayout
+    EmptyLayout, AdminLayout, HomeLayout
   }
 }
 </script>

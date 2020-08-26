@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="loading" />
     <div class="app-main-layout" v-else>
-      <Navbar />
+      <AdminNavbar />
       <main class="app-content">
         <div class="app-page">
           <router-view />
@@ -19,13 +19,12 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
+import AdminNavbar from '@/components/AdminNavbar.vue'
 
 export default {
   name: 'main-layout',
   data () {
     return {
-      isNavOpen: true,
       loading: true
     }
   },
@@ -36,7 +35,7 @@ export default {
     this.loading = false
   },
   components: {
-    Navbar
+    AdminNavbar
   }
 }
 </script>

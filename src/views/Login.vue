@@ -95,9 +95,10 @@ export default {
         email: this.email,
         password: this.password
       }
+      localStorage.setItem('user', JSON.stringify(formData))
       try {
         await this.$store.dispatch('login', formData)
-        this.$router.push('/')
+        this.$router.push('/admin')
       } catch (e) { }
     }
   }

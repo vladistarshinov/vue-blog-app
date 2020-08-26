@@ -20,8 +20,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'home' },
     component: () => import('../views/Home.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin-page',
+    meta: { layout: 'admin', auth: true },
+    component: () => import('../views/AdminPage.vue')
   }
 ]
 

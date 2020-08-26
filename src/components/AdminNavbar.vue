@@ -13,19 +13,8 @@
               href="#"
               data-target="dropdown"
               ref="dropdown"
-              v-if="name !== undefined"
           >
             Привет, {{name}}
-            <i class="material-icons right">arrow_drop_down</i>
-          </a>
-          <a
-            class="dropdown-trigger black-text"
-            href="#"
-            data-target="dropdown"
-            ref="dropdown"
-            v-else
-          >
-            Привет
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -55,6 +44,7 @@ export default {
     async logout () {
       await this.$store.dispatch('logout')
       this.$router.push('/login?message=logout')
+      localStorage.removeItem('user')
     }
   },
   computed: {

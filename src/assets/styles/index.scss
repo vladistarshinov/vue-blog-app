@@ -60,7 +60,8 @@
 }
 
 .nav-wrapper,
-.navbar-left {
+.navbar-left,
+.navbar-right {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -69,8 +70,15 @@
   align-items: center
 }
 
-.navbar-left>a {
+.navbar-left>a,
+.navbar-right>a {
   margin-right: 1rem
+} 
+
+.navbar-right>a>span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 } 
 
 .page-title {
