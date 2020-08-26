@@ -13,6 +13,7 @@ import firebaseConfig from './firebase/firebase'
 import M from 'materialize-css'
 import messagePlugin from '@/utils/message.plugin'
 import Loader from '@/components/Loader'
+import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
@@ -31,6 +32,7 @@ firebase.auth().onAuthStateChanged(() => {
     app = new Vue({
       router,
       store,
+      vuetify,
       render: h => h(App)
     }).$mount('#app')
   }

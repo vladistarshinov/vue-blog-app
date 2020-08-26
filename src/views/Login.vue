@@ -73,7 +73,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      isAuth: false
     }
   },
   validations: {
@@ -95,7 +96,11 @@ export default {
         email: this.email,
         password: this.password
       }
-      localStorage.setItem('user', JSON.stringify(formData))
+      const localData = {
+        ...formData,
+        isAuth: true
+      }
+      localStorage.setItem('user', JSON.stringify(localData))
       try {
         await this.$store.dispatch('login', formData)
         this.$router.push('/admin')

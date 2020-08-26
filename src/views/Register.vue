@@ -95,7 +95,8 @@ export default {
       name: '',
       email: '',
       password: '',
-      agreement: false
+      agreement: false,
+      isAuth: false
     }
   },
   validations: {
@@ -115,7 +116,11 @@ export default {
         email: this.email,
         password: this.password
       }
-      localStorage.setItem('user', JSON.stringify(formData))
+      const localData = {
+        ...formData,
+        isAuth: true
+      }
+      localStorage.setItem('user', JSON.stringify(localData))
 
       try {
         await this.$store.dispatch('register', formData)

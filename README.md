@@ -1,4 +1,4 @@
-# vue-crm-app
+# vue-blog-app
 
 ## Project setup
 ```

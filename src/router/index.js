@@ -28,6 +28,24 @@ const routes = [
     name: 'admin-page',
     meta: { layout: 'admin', auth: true },
     component: () => import('../views/AdminPage.vue')
+  },
+  {
+    path: '/detail/:id',
+    name: 'detail',
+    meta: { layout: 'admin', auth: true },
+    component: () => import('../views/Detail.vue')
+  },
+  {
+    path: '/create',
+    name: 'newPost',
+    meta: { layout: 'admin', auth: true },
+    component: () => import('../views/NewPost.vue')
+  },
+  {
+    path: '/edit',
+    name: 'updatePost',
+    meta: { layout: 'admin', auth: true },
+    component: () => import('../views/UpdatePost.vue')
   }
 ]
 
@@ -40,8 +58,8 @@ const router = new VueRouter({
 /* Securing of routes */
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser
-  const requreAuth = to.meta.auth
-  if (requreAuth && !currentUser) {
+  const requireAuth = to.meta.auth
+  if (requireAuth && !currentUser) {
     next('/login?message=login')
   } else {
     next()

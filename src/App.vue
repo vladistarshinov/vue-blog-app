@@ -24,5 +24,5 @@ export default {
 
 <style lang="scss">
   @import '~materialize-css/dist/css/materialize.min.css';
-  @import 'assets/styles/index.scss';
+  @import './assets/styles/index.scss';
 </style>
