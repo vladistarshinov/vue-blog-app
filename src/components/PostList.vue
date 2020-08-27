@@ -25,6 +25,7 @@
        <v-btn
         color="purple"
         text
+        v-if="info"
       >
       <router-link to="/edit">Редактировать</router-link>
       </v-btn>
@@ -32,6 +33,7 @@
         color="purple"
         text
         @click="deletePost(record.id, idx)"
+        v-if="info"
       >
         Удалить
       </v-btn>
@@ -42,14 +44,20 @@
 
 <script>
 export default {
+  data () {
+    return {
+      info: this.$store.getters.info.isAdmin
+    }
+  },
   props: {
     records: {
       type: Array,
       required: true
     }
   },
-  mounted () {
-    console.log(window.localStorage.user)
+  async mounted () {
+    const info = await this.$store.getters.info.isAdmin
+    console.log(info)
   },
   methods: {
     async deletePost (id, idx) {

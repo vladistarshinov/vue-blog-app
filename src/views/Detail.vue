@@ -6,11 +6,48 @@
         <div class="col s12 m6">
           <div class="card">
             <div class="card-content black-text">
-              <p>Название статьи: {{ record.title }}</p>
-              <p>Короткое описание: {{ record.shortDescription }}</p>
-              <p>Описание: {{ record.description }}</p>
-
+              <h3>{{ record.title }}</h3>
+              <h6>{{ record.shortDescription }}</h6>
+              <p>{{ record.description }}</p>
               <small>{{ record.date }}</small>
+              <form class="form" v-if="!info" @submit.prevent="submitHandler">
+                <p>Оставьте свой комментарий</p>
+                <input
+                  id="comment"
+                  type="text"
+                  v-model="comment"
+                  :class="{ invalid: $v.comment.$dirty && !$v.comment.required }"
+                >
+                <span
+                  v-if="$v.comment.$dirty && !$v.comment.required"
+                  class="helper-text invalid"
+                >Введите комментарий</span>
+                <button class="btn waves-effect waves-light" type="submit">
+                  Отправить
+                  <i class="material-icons right">send</i>
+                </button>
+              </form>
+              <v-card
+                class="mx-auto"
+                max-width="100%"
+                v-for="(comment, idx) in record.comments"
+                :key="idx"
+              >
+                <v-card-title>
+                  {{comment.name}}
+                </v-card-title>
+                <v-card-subtitle>
+                  {{ comment.comment }}
+                </v-card-subtitle>
+                <v-btn
+                  color="purple"
+                  text
+                  @click.prevent="deleteComment(record.id, record.comment.id, idx)"
+                  v-if="info"
+                >
+                  Удалить
+                </v-btn>
+              </v-card>
             </div>
           </div>
         </div>
@@ -21,13 +58,18 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'detail',
   data () {
     return {
       record: null,
+      info: this.$store.getters.info.isAdmin,
       loading: true
     }
+  },
+  validations: {
+    comment: { required }
   },
   async mounted () {
     const id = this.$route.params.id
@@ -37,6 +79,39 @@ export default {
       ...record
     }
     this.loading = false
+  },
+  computed: {
+    name () {
+      return this.$store.getters.info.name
+    }
+  },
+  methods: {
+    async submitHandler () {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+
+      try {
+        await this.$store.dispatch('createComment', {
+          id: this.record.id,
+          name: this.$store.getters.info.name,
+          comment: this.comment,
+          date: new Date().toJSON()
+        })
+
+        this.$message('Комментарий успешно отправлен')
+        this.$v.$reset()
+        this.comment = ''
+      } catch (e) {}
+    },
+    async deletePost (recordId, commentId, idx) {
+      if (confirm('Вы действительно хотите удалить комментарий?')) {
+        await this.$store.dispatch('deleteComment', recordId, commentId)
+        this.$message('Комментарий удален')
+        this.records.comments.splice(idx, 1)
+      }
+    }
   }
 }
 </script>

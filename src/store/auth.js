@@ -20,7 +20,8 @@ export default {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUserId')
         await firebase.database().ref(`/users/${uid}/info`).set({
-          name
+          name,
+          isAdmin: false
         })
       } catch (e) {
         commit('setError', e)
