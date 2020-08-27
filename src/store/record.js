@@ -1,10 +1,25 @@
 import { firebase } from '@firebase/app'
 
 export default {
+  state: {
+    records: {}
+  },
+  mutations: {
+    setRecord (state, records) {
+      state.records = records
+    },
+    clearRecord (state) {
+      state.records = {}
+    }
+  },
+  getters: {
+    records: s => s.records
+  },
   actions: {
     async createRecord ({ dispatch, commit }, record) {
       try {
-        return await firebase.database().ref('/users/records').push(record)
+        const records = await firebase.database().ref('/users/records').push(record)
+        commit('setRecord', records)
       } catch (e) {
         commit('setError', e)
         throw e

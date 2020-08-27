@@ -27,6 +27,7 @@
                   <i class="material-icons right">send</i>
                 </button>
               </form>
+              <h5>Комментарии</h5>
               <v-card
                 class="mx-auto"
                 max-width="100%"
@@ -65,7 +66,8 @@ export default {
     return {
       record: null,
       info: this.$store.getters.info.isAdmin,
-      loading: true
+      loading: true,
+      comment: ''
     }
   },
   validations: {
@@ -103,14 +105,8 @@ export default {
         this.$message('Комментарий успешно отправлен')
         this.$v.$reset()
         this.comment = ''
+        this.$router.push('/admin')
       } catch (e) {}
-    },
-    async deletePost (recordId, commentId, idx) {
-      if (confirm('Вы действительно хотите удалить комментарий?')) {
-        await this.$store.dispatch('deleteComment', recordId, commentId)
-        this.$message('Комментарий удален')
-        this.records.comments.splice(idx, 1)
-      }
     }
   }
 }

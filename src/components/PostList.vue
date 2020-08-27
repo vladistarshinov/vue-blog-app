@@ -22,12 +22,12 @@
       >
         Подробнее
       </v-btn>
-       <v-btn
+      <v-btn
         color="purple"
         text
         v-if="info"
-      >
-      <router-link to="/edit">Редактировать</router-link>
+        @click="$router.push('/edit/' + record.id)"
+      >Редактировать
       </v-btn>
        <v-btn
         color="purple"

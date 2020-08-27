@@ -4,7 +4,7 @@ export default {
   actions: {
     async createComment ({ dispatch, commit }, record) {
       try {
-        return await firebase.database().ref(`/users/records/${record.id}/comments`).push(record)
+        await firebase.database().ref(`/users/records/${record.id}/comments`).push(record)
       } catch (e) {
         commit('setError', e)
         throw e

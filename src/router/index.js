@@ -42,7 +42,7 @@ const routes = [
     component: () => import('../views/NewPost.vue')
   },
   {
-    path: '/edit',
+    path: '/edit/:id',
     name: 'updatePost',
     meta: { layout: 'admin', auth: true },
     component: () => import('../views/UpdatePost.vue')
