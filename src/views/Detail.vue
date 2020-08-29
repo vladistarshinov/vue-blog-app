@@ -7,48 +7,10 @@
           <div class="card">
             <div class="card-content black-text">
               <h3>{{ record.title }}</h3>
+              <small>{{ record.date | dateFilter('datetime') }}</small>
               <h6>{{ record.shortDescription }}</h6>
               <p>{{ record.description }}</p>
-              <small>{{ record.date }}</small>
-              <form class="form" v-if="!info" @submit.prevent="submitHandler">
-                <p>Оставьте свой комментарий</p>
-                <input
-                  id="comment"
-                  type="text"
-                  v-model="comment"
-                  :class="{ invalid: $v.comment.$dirty && !$v.comment.required }"
-                >
-                <span
-                  v-if="$v.comment.$dirty && !$v.comment.required"
-                  class="helper-text invalid"
-                >Введите комментарий</span>
-                <button class="btn waves-effect waves-light" type="submit">
-                  Отправить
-                  <i class="material-icons right">send</i>
-                </button>
-              </form>
-              <h5>Комментарии</h5>
-              <v-card
-                class="mx-auto"
-                max-width="100%"
-                v-for="(comment, idx) in record.comments"
-                :key="idx"
-              >
-                <v-card-title>
-                  {{comment.name}}
-                </v-card-title>
-                <v-card-subtitle>
-                  {{ comment.comment }}
-                </v-card-subtitle>
-                <v-btn
-                  color="purple"
-                  text
-                  @click.prevent="deleteComment(record.id, record.comment.id, idx)"
-                  v-if="info"
-                >
-                  Удалить
-                </v-btn>
-              </v-card>
+              <Comments :record='record' :records='records' />
             </div>
           </div>
         </div>
@@ -59,23 +21,20 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import Comments from '@/components/Comments.vue'
 export default {
   name: 'detail',
   data () {
     return {
       record: null,
-      info: this.$store.getters.info.isAdmin,
-      loading: true,
-      comment: ''
+      records: [], //
+      loading: true
     }
-  },
-  validations: {
-    comment: { required }
   },
   async mounted () {
     const id = this.$route.params.id
     const record = await this.$store.dispatch('fetchRecordById', id)
+    this.records = await this.$store.dispatch('fetchRecords', id) //
     // eslint-disable-next-line no-unused-vars
     this.record = {
       ...record
@@ -87,27 +46,8 @@ export default {
       return this.$store.getters.info.name
     }
   },
-  methods: {
-    async submitHandler () {
-      if (this.$v.$invalid) {
-        this.$v.$touch()
-        return
-      }
-
-      try {
-        await this.$store.dispatch('createComment', {
-          id: this.record.id,
-          name: this.$store.getters.info.name,
-          comment: this.comment,
-          date: new Date().toJSON()
-        })
-
-        this.$message('Комментарий успешно отправлен')
-        this.$v.$reset()
-        this.comment = ''
-        this.$router.push('/admin')
-      } catch (e) {}
-    }
+  components: {
+    Comments
   }
 }
 </script>

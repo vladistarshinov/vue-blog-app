@@ -6,7 +6,7 @@
     <Loader v-if="loading" />
     <div class="row" v-else>
       <PostList v-if="records.length" :records="records" />
-      <p class="text-center" v-else>Записей в блоге нет. Добавьте <router-link to="record">первую</router-link></p>
+      <p class="text-center" v-else>Записей в блоге нет. Добавьте <router-link to="create">первую</router-link></p>
     </div>
   </div>
 </template>
@@ -29,6 +29,7 @@ export default {
     if (messages[this.$route.query.message]) {
       this.$message(messages[this.$route.query.message])
     }
+    console.log(Object.keys(JSON.parse(JSON.stringify(this.records))[0].comments).length)
   },
   components: {
     PostList

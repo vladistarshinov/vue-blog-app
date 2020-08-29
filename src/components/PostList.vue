@@ -37,6 +37,8 @@
       >
         Удалить
       </v-btn>
+      <v-spacer></v-spacer>
+      <p>Комментарии: {{ records[idx].comments !== undefined ? Object.keys(records[idx].comments).length : 0 }}</p>
     </v-card-actions>
   </v-card>
  </div>
@@ -55,12 +57,9 @@ export default {
       required: true
     }
   },
-  async mounted () {
-    const info = await this.$store.getters.info.isAdmin
-    console.log(info)
-  },
   methods: {
     async deletePost (id, idx) {
+      console.log(idx)
       if (confirm('Вы действительно хотите удалить пост?')) {
         await this.$store.dispatch('deleteRecord', id)
         this.$message('Пост удален')
