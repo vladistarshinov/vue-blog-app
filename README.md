@@ -24,5 +24,5 @@
 npm install -- Установить пакеты
 ```
 ```
-nom run serve -- Запустить
+npm run serve -- Запустить
 ```
