@@ -19,32 +19,32 @@ const routes = [
   },
   {
     path: '/',
-    name: 'home',
+    name: 'home-not-auth-page',
     meta: { layout: 'home' },
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/HomeNotAuthPage.vue')
   },
   {
-    path: '/admin',
-    name: 'admin-page',
-    meta: { layout: 'admin', auth: true },
-    component: () => import('../views/AdminPage.vue')
+    path: '/home',
+    name: 'home-auth-page',
+    meta: { layout: 'auth', auth: true },
+    component: () => import('../views/HomeAuthPage.vue')
   },
   {
     path: '/detail/:id',
     name: 'detail',
-    meta: { layout: 'admin', auth: true },
+    meta: { layout: 'home' },
     component: () => import('../views/Detail.vue')
   },
   {
     path: '/create',
     name: 'newPost',
-    meta: { layout: 'admin', auth: true },
+    meta: { layout: 'auth', auth: true },
     component: () => import('../views/NewPost.vue')
   },
   {
     path: '/edit/:id',
     name: 'updatePost',
-    meta: { layout: 'admin', auth: true },
+    meta: { layout: 'auth', auth: true },
     component: () => import('../views/UpdatePost.vue')
   }
 ]

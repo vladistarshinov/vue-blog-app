@@ -51,6 +51,10 @@
   height: 64px !important;
   padding: 0 2rem;
   z-index: 1000;
+
+  &-left {
+    width: 30%;
+  }
 }
 
 .nav-wrapper {
@@ -141,55 +145,72 @@
   font-size: 1.2rem
 }
 
-.bill-card {
-  height: 340px;
-}
-
-.cards {
-  &__currency {
-    &-list td {
-      font-size: 1rem;
-      padding: 0.7rem;
-    }
-  }
-}
-
-.v-card {
-  margin-bottom: 10px;
+.card__posts,
+.card__comments {
+  margin: 0 auto;
+  margin-bottom: 10px
 }
 
 .pointer {
   cursor: pointer
 }
 
+.comments {
+  margin-top: 40px;
+  h5 {
+    margin-bottom: 20px;
+  }
+}
+
 .form {
-  max-width: 500px
+  max-width: 500px;
+
+  &__comments {
+    margin-top: 50px;
+  }
+}
+.v-card__actions {
+  padding: 10px 3px !important
 }
 
-.breadcrumb-wrap,
-.breadcrumb-wrap a,
-.breadcrumb-wrap a:before {
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center
+.amount-comments {
+  padding-right: 3px;
 }
 
-.breadcrumb-wrap {
-  position: relative;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex
+@media (max-width: 800px) {
+  .auth {
+    &-card {
+      width: 75%;
+    }
+  }
 }
 
-.breadcrumb-wrap a,
-.breadcrumb-wrap a:before {
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  color: rgba(0, 0, 0, .7) !important
+@media (max-width: 630px) {
+      h3, h4 {
+        font-size: 1.5rem;
+        margin-top: 10px;
+      }
 }
 
-.history-chart {
-  max-width: 600px;
-  margin: 0 auto
+@media (max-width: 600px) {
+  .page-subtitle {
+    &__edit {
+      margin-top: 20px;
+    }
+  }
 }
+
+@media (max-width: 460px) {
+  .auth {
+    &-card {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .v-card__actions > .v-btn.v-btn {
+    font-size: 9px;
+  }
+}
+

@@ -1,15 +1,15 @@
 <template>
-  <nav class="navbar orange lighten-1">
+  <nav class="navbar green darken-3">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="$emit('click')">
-          <i class="material-icons black-text">dehaze</i>
+          <i class="material-icons white-text">Blogger</i>
         </a>
       </div>
-      <ul class="right hide-on-small-and-down">
+      <ul class="right">
         <li>
           <a
-              class="dropdown-trigger black-text"
+              class="dropdown-trigger white-text"
               href="#"
               data-target="dropdown"
               ref="dropdown"
@@ -21,7 +21,7 @@
           <ul id='dropdown' class='dropdown-content'>
             <li>
               <a class="black-text" @click.prevent="logout" href="#">
-                <i class="material-icons">assignment_return</i>Выйти
+                <i class="material-icons">exit_to_app</i>Выйти
               </a>
             </li>
           </ul>

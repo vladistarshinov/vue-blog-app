@@ -3,8 +3,8 @@
     <div class="page-title">
       <h3>Редактировать пост</h3>
     </div>
-
-    <form class="form" @submit.prevent="submitHandler">
+    <p v-if="!isAdmin">Вы не обладаете правами администратора для редактирования поста!</p>
+    <form class="form" v-else @submit.prevent="submitHandler">
       <div class="input-field">
         <input
             id="title"
@@ -41,15 +41,15 @@
             v-model="description"
             :class="{invalid: $v.description.$dirty && !$v.description.required}"
         >
-        <label for="description">Описание</label>
+        <label for="description">Полное описание</label>
         <small
           class="helper-text invalid"
           v-if="$v.description.$dirty && !$v.description.required"
         >
-         Введите описание
+         Введите полное описание
         </small>
       </div>
-      <button class="btn waves-effect waves-light" type="submit">
+      <button class="btn waves-effect waves-light white-text" type="submit">
         Обновить
         <i class="material-icons right">send</i>
       </button>
@@ -68,7 +68,8 @@ export default {
       record: [],
       title: '',
       shortDescription: '',
-      description: ''
+      description: '',
+      isAdmin: this.$store.getters.info.isAdmin
     }
   },
   validations: {
@@ -79,7 +80,7 @@ export default {
   async mounted () {
     this.name = this.info.name
     const id = this.$route.params.id
-    const record = await this.$store.dispatch('fetchRecordById', id)
+    const record = await this.$store.dispatch('fetchPostsById', id)
     // eslint-disable-next-line no-unused-vars
     this.record = {
       ...record
@@ -87,7 +88,6 @@ export default {
     this.title = this.record.title
     this.shortDescription = this.record.shortDescription
     this.description = this.record.description
-    console.log(this.title)
     setTimeout(() => {
       M.updateTextFields()
     })
@@ -96,10 +96,10 @@ export default {
     ...mapGetters(['info'])
   },
   methods: {
-    ...mapActions(['updateRecord']),
+    ...mapActions(['updatePost']),
     async submitHandler () {
       try {
-        await this.updateRecord({
+        await this.updatePost({
           id: this.record.id,
           title: this.title,
           shortDescription: this.shortDescription,
@@ -107,7 +107,7 @@ export default {
         })
         console.log(this.title)
         this.$message('Категория успешно обновлена!')
-        this.$router.push('/admin')
+        this.$router.push('/home')
       } catch (e) { }
     }
   }

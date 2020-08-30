@@ -2,15 +2,14 @@
   <div>
     <Loader v-if="loading" />
     <div class="app-main-layout" v-else>
-      <AdminNavbar />
+      <AuthNavbar />
       <main class="app-content">
         <div class="app-page">
           <router-view />
         </div>
       </main>
-
-      <div class="fixed-action-btn">
-        <router-link class="btn-floating btn-large blue" to="/create">
+      <div class="fixed-action-btn" v-if="isAdmin">
+        <router-link class="btn-floating btn-large red" to="/create">
           <i class="large material-icons">add</i>
         </router-link>
       </div>
@@ -19,23 +18,30 @@
 </template>
 
 <script>
-import AdminNavbar from '@/components/AdminNavbar.vue'
+import AuthNavbar from '@/components/AuthNavbar.vue'
 
 export default {
-  name: 'main-layout',
+  name: 'auth-layout',
   data () {
     return {
-      loading: true
+      loading: true,
+      isAdmin: false
     }
   },
   async mounted () {
     if (!Object.keys(this.$store.getters.info).length) {
       await this.$store.dispatch('fetchInfo')
     }
+    this.isAdmin = this.$store.getters.info.isAdmin
+    if (localStorage.getItem('user') == null) {
+      this.isAuth = false
+    } else {
+      this.isAuth = JSON.parse(localStorage.getItem('user')).isAuth
+    }
     this.loading = false
   },
   components: {
-    AdminNavbar
+    AuthNavbar
   }
 }
 </script>

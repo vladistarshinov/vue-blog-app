@@ -8,7 +8,7 @@
 
 <script>
 import EmptyLayout from '@/layouts/EmptyLayout'
-import AdminLayout from '@/layouts/AdminLayout'
+import AuthLayout from '@/layouts/AuthLayout'
 import HomeLayout from '@/layouts/HomeLayout'
 export default {
   computed: {
@@ -17,12 +17,12 @@ export default {
     }
   },
   components: {
-    EmptyLayout, AdminLayout, HomeLayout
+    EmptyLayout, AuthLayout, HomeLayout
   }
 }
 </script>
 
 <style lang="scss">
   @import '~materialize-css/dist/css/materialize.min.css';
-  @import './assets/styles/index.scss';
+  @import './styles/index.scss';
 </style>

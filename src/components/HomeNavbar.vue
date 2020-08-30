@@ -1,20 +1,24 @@
 <template>
-  <nav class="navbar orange lighten-1">
+  <nav class="navbar green darken-3">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="$emit('click')">
-          <i class="material-icons black-text">dehaze</i>
+          <i class="material-icons white-text">Blogger</i>
         </a>
-        <span class="black-text">Блог</span>
       </div>
-      <div class="navbar-right">
-        <router-link to="/login" class="black-text" href="#">
-          <span><i class="material-icons">assignment_return</i>Войти</span>
+      <div class="navbar-right" v-if="!isAuth">
+        <router-link to="/login" class="white-text" href="#">
+          <span><i class="material-icons">input</i>Войти</span>
         </router-link>
-        <router-link to="/register" class="black-text" href="#">
+        <router-link to="/register" class="white-text" href="#">
           <span><i class="material-icons">assignment_return</i>Регистрация</span>
         </router-link>
       </div>
+      <ul class="right" v-else>
+        <li class="white-text">
+            Вы авторизованы!
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -25,7 +29,8 @@ import M from 'materialize-css'
 export default {
   data () {
     return {
-      dropdown: null
+      dropdown: null,
+      isAuth: false
     }
   },
   methods: {
@@ -45,6 +50,11 @@ export default {
       constrainWidth: false,
       autoTrigger: true
     })
+    if (localStorage.getItem('user') == null) {
+      this.isAuth = false
+    } else {
+      this.isAuth = JSON.parse(localStorage.getItem('user')).isAuth
+    }
   },
   beforeDestroy () {
     clearInterval(this.interval)

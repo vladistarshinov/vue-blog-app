@@ -16,7 +16,7 @@ export default {
     records: s => s.records
   },
   actions: {
-    async createRecord ({ dispatch, commit }, record) {
+    async createPost ({ commit }, record) {
       try {
         const records = await firebase.database().ref('/users/records').push(record)
         commit('setRecord', records)
@@ -25,7 +25,7 @@ export default {
         throw e
       }
     },
-    async deleteRecord ({ commit, dispatch }, id) {
+    async deletePost ({ commit }, id) {
       try {
         await firebase.database().ref('/users/records').child(id).remove()
       } catch (e) {
@@ -33,7 +33,7 @@ export default {
         throw e
       }
     },
-    async updateRecord ({ commit, dispatch }, { title, shortDescription, description, id }) {
+    async updatePost ({ commit }, { title, shortDescription, description, id }) {
       try {
         await firebase.database().ref('/users/records').child(id).update({ title, shortDescription, description })
       } catch (e) {
@@ -41,16 +41,17 @@ export default {
         throw e
       }
     },
-    async fetchRecords ({ dispatch, commit }) {
+    async fetchPosts ({ commit }) {
       try {
         const records = (await firebase.database().ref('/users/records').once('value')).val() || {}
+        localStorage.setItem('posts', JSON.stringify(records))
         return Object.keys(records).map(key => ({ ...records[key], id: key }))
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async fetchRecordById ({ dispatch, commit }, id) {
+    async fetchPostsById ({ commit }, id) {
       try {
         const record = (await firebase.database().ref('/users/records').child(id).once('value')).val() || {}
         return { ...record, id }

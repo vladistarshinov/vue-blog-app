@@ -2,9 +2,8 @@ import { firebase } from '@firebase/app'
 
 export default {
   actions: {
-    async login ({ dispatch, commit }, { email, password }) {
+    async login ({ commit }, { email, password }) {
       try {
-        // async method and return promise => put 'await' + login () is async
         await firebase.auth().signInWithEmailAndPassword(email, password)
       } catch (e) {
         commit('setError', e)
